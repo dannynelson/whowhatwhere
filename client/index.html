@@ -13,12 +13,25 @@
     <div id="header-bar">
       <span id="title">who<span>what</span>where</span>
       <form ng-submit="search(location, term)" id="search-bar">
-        <input id="location" ng-model="location" class="form-control" placeholder="Location">
+        <input id="location" ng-model="location" class="form-control" placeholder="Location (required)">
         <input id="term" ng-model="term" class="form-control" placeholder="Search Term">
         <button id="search" class="btn btn-primary">Search</button>
       </form>
     </div>
-    <div id="map-canvas" map-directive></div>
+    <div id="side-panel" ng-show="results.length || searching">
+      <span ng-show="searching" us-spinner></span>
+      <div ng-show="!searching && results.length" ng-repeat="result in results" class="result">
+        <figure class="pull-left thumbnail">
+          <img ng-src="{{ result.photo || 'http://placehold.it/100x100' }}">
+        </figure>
+        <div class="name">{{ result.name }}</div>
+        <div>{{ result.rating || 'rating not available' }}</div>
+        <div><span ng-repeat="category in categories track by $index">{{category}}</span></div>
+        <div>{{ result.address.address1 }}, {{ result.address.zip }}</div>
+        <div>{{ result.phone }}</div>
+      </div>
+    </div>
+    <div id="map-canvas" map-directive refresh="refreshMap"></div>
   </div>
 
   <!-- Angular Templates -->

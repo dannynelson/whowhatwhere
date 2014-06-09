@@ -26,13 +26,13 @@ body {
   border-radius: 7px;
   padding: 5px;
   position: absolute;
-  right: 10px;
+  right: 20px;
   top: 7px;
 }
 
 #search-bar input {
   display: inline-block;
-  width: 255px;
+  width: 150px;
 }
 
 #title {
@@ -56,4 +56,36 @@ body {
 
 #map-canvas {
   height: 100%;
+}
+
+#side-panel {
+  z-index: 10;
+  position: absolute;
+  right: 0px;
+  width: 416px;
+  height: 100%;
+  background-color: rgba(255,255,255, 0.7);
+  padding: 10px;
+  padding-top: 80px;
+  height: 100%;
+  overflow-y: scroll;
+
+  .result {
+    min-height: 100px;
+    background-color: rgba(255,255,255, 1);
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+
+    .name {
+      font-weight: 600;
+    }
+
+    .thumbnail {
+      height: 80px;
+      width: 80px;
+      border-radius: 5px;
+      margin-right: 9px;
+    }
+  }
 }

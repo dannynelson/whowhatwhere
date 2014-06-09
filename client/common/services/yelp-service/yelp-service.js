@@ -23,7 +23,7 @@ angular.module('services.yelpService', [
         menu: null,
         url: business.url,
         photo: business.photo_url,
-        avgRating: business.avg_rating,
+        rating: business.avg_rating,
         reviews: _.map(business.reviews, function(review) {
           return {
             user: review.user_name,

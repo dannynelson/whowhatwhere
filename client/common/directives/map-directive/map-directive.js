@@ -1,9 +1,13 @@
-debugger;
-angular.module('directives.mapDirective', [])
+angular.module('directives.mapDirective', [
+  'services.geocodeService'
+])
 
-.directive('mapDirective', function() {
+.directive('mapDirective', function(geocodeService) {
   return {
     restrict: 'EA',
+    scope: {
+      refresh: '='
+    },
     link: function(scope, element, attrs) {
       var myLatlng = new google.maps.LatLng(37.783, -122.419);
       var mapOptions = {
@@ -27,6 +31,13 @@ angular.module('directives.mapDirective', [])
       google.maps.event.addListener(marker, 'click', function() {
         infowindow.open(map,marker);
       });
+
+      scope.refresh = function(location, markers) {
+        geocodeService.geocode(location).then(function(coordinates) {
+          debugger;
+          map.setCenter(coordinates);
+        });
+      };
     }
   };
 });

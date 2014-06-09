@@ -23,7 +23,7 @@ angular.module('services.foursquareService', [
         menu: business.menu && business.menu.url,
         url: business.url,
         photo: null,
-        avgRating: null,
+        rating: null,
         reviews: []
       };
     });
