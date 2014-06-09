@@ -19,8 +19,11 @@
 // //  ? Business description 
 
 // //  Up to 5 customer reviews
+// Add markers
+// display info
 
 angular.module('app', [
+  'angularSpinner',
   'services.foursquareService',
   'services.yelpService',
   'directives.mapDirective'
@@ -28,38 +31,19 @@ angular.module('app', [
 
 .controller('AppController', function($scope, $q, foursquareService, yelpService) {
   $scope.search = function(location, term) {
-    debugger;
+    $scope.searching = true;
     $q.all([
       yelpService.search(location, term),
       foursquareService.search(location, term)
     ]).then(function(results) {
+      // TODO: remove duplicates
       debugger;
+      $scope.refreshMap(location);
+      $scope.searching = false;
+      $scope.results = results[0].concat(results[1]).slice(0, 25);
+      $scope.addMarkers($scope.results);
       $scope.location = '';
       $scope.term = '';
     });
   };
 });
-
-// $(function() {
-//   $('#search').click(function() {
-//     debugger;
-//     var location = $('#location').val();
-//     var term = $('#term').val();
-//     $('#location').val('');
-//     $('#term').val('');
-//     debugger;
-
-//     async.parallel({
-//       yelp: function(callback){
-//         searchYelp(location, term, callback);
-//       },
-//       foursquare: function(callback){
-//         searchFoursquare(location, term, callback);
-//       }
-//     }, function(err, results) {
-//       debugger;
-//         // results is now equals to: {one: 1, two: 2}
-//     });
-//   });
-// });
-

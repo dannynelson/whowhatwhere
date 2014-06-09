@@ -20,10 +20,10 @@ angular.module('services.foursquareService', [
           return category.name;
         }),
         phone: business.contact.phone,
-        menu: business.menu.url,
+        menu: business.menu && business.menu.url,
         url: business.url,
         photo: null,
-        avgRating: null,
+        rating: null,
         reviews: []
       };
     });
@@ -31,7 +31,8 @@ angular.module('services.foursquareService', [
 
   return {
     search: function(location, term) {
-      return $http.jsonp('https://api.foursquare.com/v2/venues/search?callback=JSON_CALLBACK', {
+      var deferred = $q.defer();
+      $http.jsonp('https://api.foursquare.com/v2/venues/search?callback=JSON_CALLBACK', {
         params: {
           near: location,
           query: term,
@@ -40,7 +41,10 @@ angular.module('services.foursquareService', [
           client_secret: '4YGI4CU3JXX0M32R5CSVDMMD21JUQZG1Z33LECZRXIZ0CD0Q',
           v: '20140608'
         }
+      }).then(function(response) {
+        deferred.resolve(convertFoursquareDataFormat(response.data.response.venues));
       });
+      return deferred.promise;
     }
   };
 });
