@@ -3,6 +3,7 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" type="text/css" href="../bower_components/normalize-css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="index.css">
 
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -12,8 +13,15 @@
   </head>
   <body>
     <div id="map-container">
-      <div id="title">WhoWhatWhere</div>
-      <!-- <div id="map-canvas"></div> -->
+      <div id="header-bar">
+        <span id="title">who<span>what</span>where</span>
+        <div id="search-bar">
+          <input id="location" class="form-control" placeholder="Location">
+          <input id="term" class="form-control" placeholder="Search Term">
+          <button id="search" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+      <div id="map-canvas"></div>
 
     </div>
     
