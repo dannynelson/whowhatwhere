@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <title>WhoWhatWhere</title>
+  <!-- for grunt watch livereload -->
+  <script src="//localhost:35729/livereload.js"></script>
+  <link href="bundle.css" rel="stylesheet">
+</head>
+
+<body ng-controller="AppController">
+  <div id="map-container">
+    <div id="header-bar">
+      <span id="title">who<span>what</span>where</span>
+      <form ng-submit="search(location, term)" id="search-bar">
+        <input id="location" ng-model="location" class="form-control" placeholder="Location">
+        <input id="term" ng-model="term" class="form-control" placeholder="Search Term">
+        <button id="search" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+    <div id="map-canvas" map-directive></div>
+  </div>
+
+  <!-- Angular Templates -->
+  <!-- build:section templates --><!-- /build -->
+  
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBH0hKJ8FMeHu8Bp0CZF3W2YAmYRJH1JE4"></script>
+  <script src="bundle.js"></script>
+</body>
+</html>

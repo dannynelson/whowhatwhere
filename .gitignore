@@ -1,1 +1,10 @@
-bower_components
+logs/*
+!.gitkeep
+node_modules/
+bower_components/
+vendor/
+coverage
+tmp
+.DS_Store
+.idea
+public
