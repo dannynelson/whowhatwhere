@@ -27,17 +27,17 @@ angular.module('app', [
 ])
 
 .controller('AppController', function($scope, $q, foursquareService, yelpService) {
-  // $scope.search = function(location, term) {
-  //   debugger;
-  //   $q.all([
-  //     yelpService.search(location, term),
-  //     foursquareService.search(location, term)
-  //   ]).then(function(results) {
-  //     debugger;
-  //     $scope.location = '';
-  //     $scope.term = '';
-  //   });
-  // };
+  $scope.search = function(location, term) {
+    debugger;
+    $q.all([
+      yelpService.search(location, term),
+      foursquareService.search(location, term)
+    ]).then(function(results) {
+      debugger;
+      $scope.location = '';
+      $scope.term = '';
+    });
+  };
 });
 
 // $(function() {

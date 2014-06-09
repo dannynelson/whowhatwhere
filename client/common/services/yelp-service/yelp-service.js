@@ -37,20 +37,14 @@ angular.module('services.yelpService', [
 
   return {
     search: function(location, term) {
-      return $http.jsonp('http://api.yelp.com/business_review_search', {
-        location: location,
-        term: term,
-        ywsid: 'K2fIkNxOV2onPMDDF6867g',
-        limit: 20
+      return $http.jsonp('http://api.yelp.com/business_review_search?callback=JSON_CALLBACK', {
+        params: {
+          location: location,
+          term: term,
+          ywsid: 'K2fIkNxOV2onPMDDF6867g',
+          limit: 20
+        }
       });
-      // angular.getJSON('http://api.yelp.com/business_review_search?callback=?', {
-      //   location: location,
-      //   term: term,
-      //   ywsid: 'K2fIkNxOV2onPMDDF6867g',
-      //   limit: 20
-      // }, function(data) {
-      //   onSuccess(null, data.businesses);
-      // });
     }
   };
 });

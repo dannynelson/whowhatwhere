@@ -31,25 +31,16 @@ angular.module('services.foursquareService', [
 
   return {
     search: function(location, term) {
-      return $http.jsonp('https://api.foursquare.com/v2/venues/search', {
-        near: location,
-        query: term,
-        limit: 20,
-        client_id: 'CBXEZMJBP2M1VV3WEVZKMY2C5CNAHVA42NIEEJCFFG1AWM21',
-        client_secret: '4YGI4CU3JXX0M32R5CSVDMMD21JUQZG1Z33LECZRXIZ0CD0Q',
-        v: '20140608'
+      return $http.jsonp('https://api.foursquare.com/v2/venues/search?callback=JSON_CALLBACK', {
+        params: {
+          near: location,
+          query: term,
+          limit: 20,
+          client_id: 'CBXEZMJBP2M1VV3WEVZKMY2C5CNAHVA42NIEEJCFFG1AWM21',
+          client_secret: '4YGI4CU3JXX0M32R5CSVDMMD21JUQZG1Z33LECZRXIZ0CD0Q',
+          v: '20140608'
+        }
       });
-
-      // angular.getJSON('https://api.foursquare.com/v2/venues/search?callback=?', {
-      //   near: location,
-      //   query: term,
-      //   limit: 20,
-      //   client_id: 'CBXEZMJBP2M1VV3WEVZKMY2C5CNAHVA42NIEEJCFFG1AWM21',
-      //   client_secret: '4YGI4CU3JXX0M32R5CSVDMMD21JUQZG1Z33LECZRXIZ0CD0Q',
-      //   v: '20140608'
-      // }, function(data) {
-      //   onSuccess(null, data.response.venues);
-      // });
     }
   };
 });
