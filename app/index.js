@@ -23,3 +23,15 @@ function initialize() {
   });
 }
 google.maps.event.addDomListener(window, 'load', initialize);
+
+var yelpResource = 'http://api.yelp.com/business_review_search'
+
+// this works too!
+$.getJSON('http://api.yelp.com/business_review_search?callback=?', {
+  term: 'vegan',
+  location: 'San Francisco',
+  ywsid: 'K2fIkNxOV2onPMDDF6867g',
+  limit: 10
+}, function(data) {
+  console.log(data);
+});

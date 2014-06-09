@@ -26,8 +26,8 @@ body {
   height: 100%;
 }
 
-#search-box {
-  position: absolute;
+#bloodhound {
+/*  position: absolute;
   top: 10px; left: 10px;
-  z-index: 99;
+  z-index: 99;*/
 }

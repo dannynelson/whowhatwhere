@@ -13,6 +13,8 @@
     "tests"
   ],
   "dependencies": {
-    "normalize-css": "~3.0.1"
+    "normalize-css": "~3.0.1",
+    "typeahead.js": "~0.10.2",
+    "jquery": "~2.1.1"
   }
 }
