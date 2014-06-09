@@ -28,7 +28,6 @@ angular.module('app', [
 
 .controller('AppController', function($scope, $q, foursquareService, yelpService) {
   $scope.search = function(location, term) {
-    debugger;
     $q.all([
       yelpService.search(location, term),
       foursquareService.search(location, term)
@@ -39,27 +38,3 @@ angular.module('app', [
     });
   };
 });
-
-// $(function() {
-//   $('#search').click(function() {
-//     debugger;
-//     var location = $('#location').val();
-//     var term = $('#term').val();
-//     $('#location').val('');
-//     $('#term').val('');
-//     debugger;
-
-//     async.parallel({
-//       yelp: function(callback){
-//         searchYelp(location, term, callback);
-//       },
-//       foursquare: function(callback){
-//         searchFoursquare(location, term, callback);
-//       }
-//     }, function(err, results) {
-//       debugger;
-//         // results is now equals to: {one: 1, two: 2}
-//     });
-//   });
-// });
-
