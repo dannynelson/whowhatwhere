@@ -24,14 +24,24 @@ function initialize() {
 }
 google.maps.event.addDomListener(window, 'load', initialize);
 
-var yelpResource = 'http://api.yelp.com/business_review_search'
-
 // this works too!
 $.getJSON('http://api.yelp.com/business_review_search?callback=?', {
   term: 'vegan',
   location: 'San Francisco',
   ywsid: 'K2fIkNxOV2onPMDDF6867g',
   limit: 10
+}, function(data) {
+  console.log(data);
+});
+
+// this works
+$.getJSON('https://api.foursquare.com/v2/venues/search?callback=?', {
+  near: 'Chicago, IL', // geocodable string
+  query: 'vegan',
+  limit: 10,
+  client_id: 'CBXEZMJBP2M1VV3WEVZKMY2C5CNAHVA42NIEEJCFFG1AWM21',
+  client_secret: '4YGI4CU3JXX0M32R5CSVDMMD21JUQZG1Z33LECZRXIZ0CD0Q',
+  v: '20140608'
 }, function(data) {
   console.log(data);
 });
