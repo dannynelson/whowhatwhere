@@ -14,12 +14,16 @@ angular.module('services.foursquareService', [
           city: business.location.city,
           state: business.location.state,
           zip: business.location.postalCode,
-          country: business.location.country
+          country: business.location.country,
+          geometry: {
+            lat: business.location.lat,
+            lng: business.location.lng
+          }
         },
         categories: _.map(business.categories, function(category) {
           return category.name;
         }),
-        phone: business.contact.phone,
+        phone: business.contact.phone || '',
         menu: business.menu && business.menu.url,
         url: business.url,
         photo: null,
@@ -42,6 +46,7 @@ angular.module('services.foursquareService', [
           v: '20140608'
         }
       }).then(function(response) {
+        debugger;
         deferred.resolve(convertFoursquareDataFormat(response.data.response.venues));
       });
       return deferred.promise;

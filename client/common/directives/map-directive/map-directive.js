@@ -6,7 +6,8 @@ angular.module('directives.mapDirective', [
   return {
     restrict: 'EA',
     scope: {
-      refresh: '='
+      refresh: '=',
+      addMarkers: '='
     },
     link: function(scope, element, attrs) {
       var myLatlng = new google.maps.LatLng(37.783, -122.419);
@@ -32,10 +33,23 @@ angular.module('directives.mapDirective', [
         infowindow.open(map,marker);
       });
 
+      // Controllers APIs
+      // ---------------------------------
       scope.refresh = function(location, markers) {
         geocodeService.geocode(location).then(function(coordinates) {
           debugger;
           map.setCenter(coordinates);
+        });
+      };
+
+      scope.addMarkers = function(businesses) {
+        angular.forEach(businesses, function(business) {
+          if (business.address.geometry) {
+            var marker = new google.maps.Marker({
+              map: map,
+              position: business.address.geometry
+            });
+          }
         });
       };
     }

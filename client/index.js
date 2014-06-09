@@ -26,6 +26,7 @@ angular.module('app', [
   'angularSpinner',
   'services.foursquareService',
   'services.yelpService',
+  'filters.phoneFilter',
   'directives.mapDirective'
 ])
 

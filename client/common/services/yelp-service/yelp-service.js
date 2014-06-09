@@ -1,8 +1,9 @@
 angular.module('services.yelpService', [
-  'services.lodash'
+  'services.lodash',
+  'services.geocodeService'
 ])
 
-.factory('yelpService', function($http, $q, _) {
+.factory('yelpService', function($http, $q, _, geocodeService) {
   var convertYelpDataFormat = function(businesses) {
     return _.map(businesses, function(business) {
       return {
@@ -14,7 +15,8 @@ angular.module('services.yelpService', [
           city: business.city,
           state: business.state,
           zip: business.zip,
-          country: business.country
+          country: business.country,
+          geometry: null
         },
         categories: _.map(business.categories, function(category) {
           return category.name;
@@ -35,6 +37,24 @@ angular.module('services.yelpService', [
     });
   };
 
+  var addGeocodeToBusinesses = function(businesses) {
+    // return map of functions that will resolve all geocodes
+    return _.map(businesses, function(business) {
+      var deferred = $q.defer();
+      geocodeService.geocode(business.address.address1 + ' ' + business.address.city + ' ' + business.address.state + ' ' + business.address.zip).then(function(geometry) {
+        business.address.geometry = {
+          lat: geometry.k,
+          lng: geometry.A,
+        };
+        deferred.resolve(business);
+      // geocoder maxes out at 10 consecutive queries. Could try throttling to get more
+      }).catch(function(err) {
+        deferred.resolve(business);
+      });
+      return deferred.promise;
+    });
+  };
+
   return {
     search: function(location, term) {
       var deferred = $q.defer();
@@ -46,7 +66,11 @@ angular.module('services.yelpService', [
           limit: 20
         }
       }).then(function(response) {
-        deferred.resolve(convertYelpDataFormat(response.data.businesses));
+        var businesses = convertYelpDataFormat(response.data.businesses);
+        var promises = addGeocodeToBusinesses(businesses);
+        $q.all(promises).then(function(results) {
+          deferred.resolve(results);
+        });
       });
       return deferred.promise;
     }

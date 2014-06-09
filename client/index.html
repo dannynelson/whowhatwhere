@@ -13,7 +13,7 @@
     <div id="header-bar">
       <span id="title">who<span>what</span>where</span>
       <form ng-submit="search(location, term)" id="search-bar">
-        <input id="location" ng-model="location" class="form-control" placeholder="Location (required)">
+        <input id="location" ng-model="location" class="form-control" placeholder="Location">
         <input id="term" ng-model="term" class="form-control" placeholder="Search Term">
         <button id="search" class="btn btn-primary">Search</button>
       </form>
@@ -25,13 +25,13 @@
           <img ng-src="{{ result.photo || 'http://placehold.it/100x100' }}">
         </figure>
         <div class="name">{{ result.name }}</div>
-        <div>{{ result.rating || 'rating not available' }}</div>
+        <div>Rating: {{ result.rating || 'rating not available' }}</div>
         <div><span ng-repeat="category in categories track by $index">{{category}}</span></div>
-        <div>{{ result.address.address1 }}, {{ result.address.zip }}</div>
-        <div>{{ result.phone }}</div>
+        <div>Address: {{ result.address.address1 ? result.address.address1 + ', ' : '' }}{{ result.address.city }} {{ result.address.zip }}</div>
+        <div>Phone: {{ result.phone | phone }}</div>
       </div>
     </div>
-    <div id="map-canvas" map-directive refresh="refreshMap"></div>
+    <div id="map-canvas" map-directive refresh="refreshMap" add-markers="addMarkers"></div>
   </div>
 
   <!-- Angular Templates -->
