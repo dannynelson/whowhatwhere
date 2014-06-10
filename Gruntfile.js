@@ -50,6 +50,17 @@ module.exports = function(grunt) {
       }
     },
 
+    copy: {
+      raty: {
+        files: [{
+          expand: true,
+          cwd: 'bower_components/raty/lib/img/',
+          src: ['**'],
+          dest: '<%= config.dist %>'
+        }]
+      }
+    },
+
     // Insert angular templates into index.html
     htmlbuild: {
       templates: {
@@ -258,6 +269,7 @@ module.exports = function(grunt) {
     'verbosity',
     'jsbeautifier:all',
     'clean:public',
+    'copy:raty',
     // templates
     'htmlbuild:templates',
     // javascript
@@ -268,11 +280,11 @@ module.exports = function(grunt) {
     'clean:less'
   ]);
 
-  grunt.registerTask('build:prod', [
-    'jshint',
-    'clean:public',
-    'copy:public',
-    'requirejs:prod',
-    'processhtml'
-  ]);
+  // grunt.registerTask('build:prod', [
+  //   'jshint',
+  //   'clean:public',
+  //   'copy:public',
+  //   'requirejs:prod',
+  //   'processhtml'
+  // ]);
 };

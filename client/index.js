@@ -27,7 +27,8 @@ angular.module('app', [
   'services.foursquareService',
   'services.yelpService',
   'filters.phoneFilter',
-  'directives.mapDirective'
+  'directives.mapDirective',
+  'directives.raty'
 ])
 
 .controller('AppController', function($scope, $q, foursquareService, yelpService) {
@@ -38,7 +39,6 @@ angular.module('app', [
       foursquareService.search(location, term)
     ]).then(function(results) {
       // TODO: remove duplicates
-      debugger;
       $scope.refreshMap(location);
       $scope.searching = false;
       $scope.results = results[0].concat(results[1]).slice(0, 25);

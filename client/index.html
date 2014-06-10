@@ -25,7 +25,8 @@
           <img ng-src="{{ result.photo || 'http://placehold.it/100x100' }}">
         </figure>
         <div class="name">{{ result.name }}</div>
-        <div>Rating: {{ result.rating || 'rating not available' }}</div>
+        <raty ng-if="result.rating" score="{{ result.rating }}" number="5"></raty>
+        <div ng-if="!result.rating">Rating not available</div>
         <div><span ng-repeat="category in categories track by $index">{{category}}</span></div>
         <div>Address: {{ result.address.address1 ? result.address.address1 + ', ' : '' }}{{ result.address.city }} {{ result.address.zip }}</div>
         <div>Phone: {{ result.phone | phone }}</div>
