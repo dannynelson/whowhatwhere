@@ -17,19 +17,7 @@ angular.module('directives.mapDirective', [
         disableDefaultUI: true
       };
       var map = new google.maps.Map(element[0], mapOptions);
-
       var infowindow = new google.maps.InfoWindow();
-
-      // To add the marker to the map, use the 'map' property
-      // var marker = new google.maps.Marker({
-      //   position: myLatlng,
-      //   map: map,
-      //   title:"Hello World!"
-      // });
-
-      // google.maps.event.addListener(marker, 'click', function() {
-      //   infowindow.open(map, marker);
-      // });
 
       // Controllers APIs
       // ---------------------------------
@@ -50,7 +38,17 @@ angular.module('directives.mapDirective', [
             });
 
             google.maps.event.addListener(marker, "mouseover", function() {
-              infowindow.setContent(business.name);
+              var contentString = '<div>'+
+                '<div><strong>'+business.name+'</strong></div>'+
+                angular.element('<div></div>').raty({
+                  score: business.rating || 0,
+                  number: 5,
+                  readOnly: true
+                }).html() +
+                '<div>'+(business.address.address1 || business.address.city || '') + ', ' + business.address.zip+'</div>'+
+                '</div>';
+
+              infowindow.setContent(contentString);
               infowindow.open(map, marker);
             });
           }
