@@ -34,20 +34,24 @@ angular.module('app', [
   };
 
   $scope.search = function(location, term) {
-    $scope.searching = true;
-    $scope.refreshMap(location);
-    $q.all([
-      yelpService.search(location, term),
-      foursquareService.search(location, term)
-    ]).then(function(results) {
-      $scope.searching = false;
-      // remove dupliactes
-      $scope.results = mergeUniqueResults(results[0], results[1]).slice(0, 25);
-      debugger;
-      $scope.addMarkers($scope.results);
-      $scope.location = '';
-      $scope.term = '';
-    });
+    if (!/\w+/.test(location)) {
+      alert('Sorry, a location is required!');
+    } else {
+      $scope.searching = true;
+      $scope.refreshMap(location);
+      $q.all([
+        yelpService.search(location, term),
+        foursquareService.search(location, term)
+      ]).then(function(results) {
+        $scope.searching = false;
+        // remove dupliactes
+        $scope.results = mergeUniqueResults(results[0], results[1]).slice(0, 25);
+        debugger;
+        $scope.addMarkers($scope.results);
+        $scope.location = '';
+        $scope.term = '';
+      });
+    }
   };
 
   $scope.select = function(business) {

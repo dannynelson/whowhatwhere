@@ -6,8 +6,7 @@
     "bower_components/angular/angular.js",
     "bower_components/spin.js/spin.js",
     "bower_components/angular-spinner/angular-spinner.js",
-    "bower_components/lodash/dist/lodash.js",
-    "bower_components/async/lib/async.js"
+    "bower_components/lodash/dist/lodash.js"
   ],
   "ngMock": ["bower_components/angular-mocks/angular-mocks.js"],
   "index": {
