@@ -6,7 +6,6 @@ angular.module('services.yelpService', [
 .factory('yelpService', function($http, $q, _, geocodeService) {
   var convertYelpDataFormat = function(businesses) {
     return _.map(businesses, function(business) {
-      debugger;
       return {
         name: business.name,
         address: {

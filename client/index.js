@@ -19,7 +19,6 @@ angular.module('app', [
 
 .controller('AppController', function($scope, $q, foursquareService, yelpService, _) {
   var mergeUniqueResults = function(results1, results2) {
-    debugger;
     var resultsMap = {};
     angular.forEach(results1, function(result) {
       resultsMap[result.name.toLowerCase()] = result;
@@ -44,9 +43,7 @@ angular.module('app', [
         foursquareService.search(location, term)
       ]).then(function(results) {
         $scope.searching = false;
-        // remove dupliactes
         $scope.results = mergeUniqueResults(results[0], results[1]).slice(0, 25);
-        debugger;
         $scope.addMarkers($scope.results);
         $scope.location = '';
         $scope.term = '';
