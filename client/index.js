@@ -47,4 +47,8 @@ angular.module('app', [
       $scope.term = '';
     });
   };
+
+  $scope.select = function(business) {
+    $scope.selectedBusiness = business;
+  };
 });

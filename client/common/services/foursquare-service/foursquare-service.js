@@ -46,7 +46,6 @@ angular.module('services.foursquareService', [
           v: '20140608'
         }
       }).then(function(response) {
-        debugger;
         deferred.resolve(convertFoursquareDataFormat(response.data.response.venues));
       });
       return deferred.promise;

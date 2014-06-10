@@ -10,6 +10,7 @@
 
 <body ng-controller="AppController">
   <div id="map-container">
+
     <div id="header-bar">
       <span id="title">who<span>what</span>where</span>
       <form ng-submit="search(location, term)" id="search-bar">
@@ -18,21 +19,60 @@
         <button id="search" class="btn btn-primary">Search</button>
       </form>
     </div>
+
     <div id="side-panel" ng-show="results.length || searching">
+      <!-- Ajax spinner -->
       <span ng-show="searching" us-spinner></span>
-      <div ng-show="!searching && results.length" ng-repeat="result in results" class="result">
-        <figure class="pull-left thumbnail">
+
+      <!-- List Results -->
+      <div
+        ng-if="!searching && !selectedBusiness && results.length"
+        ng-repeat="result in results"
+        class="result"
+        ng-click="select(result)">
+
+        <div class="pull-left thumbnail">
           <img ng-src="{{ result.photo || 'http://placehold.it/100x100' }}">
-        </figure>
+        </div>
         <div class="name">{{ result.name }}</div>
         <raty ng-if="result.rating" score="{{ result.rating }}" number="5"></raty>
         <div ng-if="!result.rating">Rating not available</div>
-        <div><span ng-repeat="category in categories track by $index">{{category}}</span></div>
-        <div>Address: {{ result.address.address1 ? result.address.address1 + ', ' : '' }}{{ result.address.city }} {{ result.address.zip }}</div>
-        <div>Phone: {{ result.phone | phone }}</div>
+        <div><span ng-repeat="category in business.categories track by $index">{{category}}</span></div>
+        <div>{{ result.address.address1 || result.address.city + ', ' }}{{ result.address.zip }}</div>
+        <div>{{ result.phone | phone }}</div>
+      </div>
+
+      <!-- Result detail -->
+      <div class="result" ng-if="!searching && selectedBusiness">
+        <div ng-click="selectedBusiness = null">Back to List</div>
+        <div class="header">
+          <div class="pull-left thumbnail">
+            <img ng-src="{{ selectedBusiness.photo || 'http://placehold.it/100x100' }}">
+          </div>
+          <div class="name">{{ selectedBusiness.name }}</div>
+          <raty ng-if="selectedBusiness.rating" score="{{ selectedBusiness.rating }}" number="5"></raty>
+          <div ng-if="!selectedBusiness.rating">Rating not available</div>
+        </div><!-- /header -->
+
+        <div>
+          <div><span ng-repeat="category in business.categories track by $index">{{category}}</span></div>
+          <a ng-if="business.url" href="{{business.url}}">Business URL</a>
+          <a ng-if="business.menu" href="{{business.menu}}">Menu</a>
+          <div>Address: {{ selectedBusiness.address.address1 ? selectedBusiness.address.address1 + ', ' : '' }}{{ selectedBusiness.address.city }} {{ selectedBusiness.address.zip }}</div>
+          <div>Phone: {{ selectedBusiness.phone | phone }}</div>
+        </div>
+
+        <h4>Reviews</h4>
+        <div class="review" ng-repeat="review in selectedBusiness.reviews">
+          <div>{{ review.user }}</div>
+          <raty ng-if="review.rating" score="{{ review.rating }}" number="5"></raty>
+          <div>{{ review.text }}</div>
+        </div>
       </div>
     </div>
-    <div id="map-canvas" map-directive refresh="refreshMap" add-markers="addMarkers"></div>
+
+    <!-- Map -->
+    <div map-directive id="map-canvas" refresh="refreshMap" add-markers="addMarkers" select="select"></div>
   </div>
 
   <!-- Angular Templates -->

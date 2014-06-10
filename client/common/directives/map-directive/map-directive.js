@@ -7,7 +7,8 @@ angular.module('directives.mapDirective', [
     restrict: 'EA',
     scope: {
       refresh: '=',
-      addMarkers: '='
+      addMarkers: '=',
+      select: '='
     },
     link: function(scope, element, attrs) {
       var myLatlng = new google.maps.LatLng(37.783, -122.419);
@@ -23,7 +24,6 @@ angular.module('directives.mapDirective', [
       // ---------------------------------
       scope.refresh = function(location, markers) {
         geocodeService.geocode(location).then(function(coordinates) {
-          debugger;
           map.setCenter(coordinates);
         });
       };
@@ -37,20 +37,24 @@ angular.module('directives.mapDirective', [
               title: business.name
             });
 
-            google.maps.event.addListener(marker, "mouseover", function() {
-              var contentString = '<div>'+
-                '<div><strong>'+business.name+'</strong></div>'+
-                angular.element('<div></div>').raty({
-                  score: business.rating || 0,
-                  number: 5,
-                  readOnly: true
-                }).html() +
-                '<div>'+(business.address.address1 || business.address.city || '') + ', ' + business.address.zip+'</div>'+
-                '</div>';
-
-              infowindow.setContent(contentString);
-              infowindow.open(map, marker);
+            google.maps.event.addListener(marker, 'click', function() {
+              scope.select(business);
             });
+
+            // google.maps.event.addListener(marker, 'mouseover', function() {
+            //   var contentString = '<div>'+
+            //     '<div><strong>'+business.name+'</strong></div>'+
+            //     angular.element('<div></div>').raty({
+            //       score: business.rating || 0,
+            //       number: 5,
+            //       readOnly: true
+            //     }).html() +
+            //     '<div>'+(business.address.address1 || business.address.city || '') + ', ' + business.address.zip+'</div>'+
+            //     '</div>';
+
+            //   infowindow.setContent(contentString);
+            //   infowindow.open(map, marker);
+            // });
           }
         });
       };
