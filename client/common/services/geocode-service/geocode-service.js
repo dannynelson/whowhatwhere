@@ -1,9 +1,6 @@
 /**
  * @ngdoc factory
  * @name geocodeService
- *
- * @description
- * Service for geocoding address strings into latitude and longitude coordinates
  */
 
 angular.module('services.geocodeService', [])
@@ -12,6 +9,11 @@ angular.module('services.geocodeService', [])
   geocoder = new google.maps.Geocoder();
 
   return {
+    /** 
+     * Geocode a string address into latitude and longitude
+     * @param {string} address - address to geocode
+     * @return {Promise} 
+     */
     geocode: function(address) {
       var d = $q.defer();
       geocoder.geocode({address: address}, function(results, status) {

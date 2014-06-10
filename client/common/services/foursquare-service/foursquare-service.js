@@ -11,6 +11,12 @@ angular.module('services.foursquareService', [
 ])
 
 .factory('foursquareService', function($http, $q, _) {
+  /** 
+   * Normalize data to be consistent with other business data structures
+   * @access private 
+   * @param {array} businesses - array of business data to to normalize
+   * @return {array} normalized data
+   */
   var convertFoursquareDataFormat = function(businesses) {
     return _.map(businesses, function(business) {
       return {
@@ -42,6 +48,13 @@ angular.module('services.foursquareService', [
   };
 
   return {
+    /** 
+     * Search foursquare API for matching venues
+     * @access public 
+     * @param {string} location - address to search
+     * @param {string} term - extra terms to search for
+     * @return {promise} resolves to retrieved businesses
+     */
     search: function(location, term) {
       var deferred = $q.defer();
       $http.jsonp('https://api.foursquare.com/v2/venues/search?callback=JSON_CALLBACK', {

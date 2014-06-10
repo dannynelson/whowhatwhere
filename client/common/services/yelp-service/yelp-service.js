@@ -12,6 +12,12 @@ angular.module('services.yelpService', [
 ])
 
 .factory('yelpService', function($http, $q, _, geocodeService) {
+  /** 
+   * Normalize data to be consistent with other business data structures
+   * @access private 
+   * @param {array} businesses - array of business data to to normalize
+   * @return {array} normalized data
+   */
   var convertYelpDataFormat = function(businesses) {
     return _.map(businesses, function(business) {
       return {
@@ -46,6 +52,12 @@ angular.module('services.yelpService', [
     });
   };
 
+  /** 
+   * Add latitude and longitude to address, since it is not provided by the Yelp API
+   * @access private 
+   * @param {array} businesses - array of business data to to geocode
+   * @return {promise} resolves geocoded businesses
+   */
   var addGeocodeToBusinesses = function(businesses) {
     // return map of functions that will resolve all geocodes
     return _.map(businesses, function(business) {
@@ -65,6 +77,13 @@ angular.module('services.yelpService', [
   };
 
   return {
+    /** 
+     * Search yelp API for matching venues
+     * @access public 
+     * @param {string} location - address to search
+     * @param {string} term - extra terms to search for
+     * @return {promise} resolves to retrieved businesses
+     */
     search: function(location, term) {
       var deferred = $q.defer();
       $http.jsonp('http://api.yelp.com/business_review_search?callback=JSON_CALLBACK', {
