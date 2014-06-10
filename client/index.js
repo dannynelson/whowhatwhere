@@ -52,9 +52,11 @@ angular.module('app', [
 
   $scope.select = function(business) {
     $scope.selectedBusiness = business;
+    $scope.addMarkers([business]);
   };
 
   $scope.returnToList = function() {
     $scope.selectedBusiness = null;
+    $scope.addMarkers($scope.results);
   };
 });

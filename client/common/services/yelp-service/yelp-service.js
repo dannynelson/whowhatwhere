@@ -27,6 +27,7 @@ angular.module('services.yelpService', [
         url: business.url,
         photo: business.photo_url,
         rating: business.avg_rating,
+        // for some reason, yelp only returns at most 1 review
         reviews: _.map(business.reviews, function(review) {
           return {
             user: review.user_name,

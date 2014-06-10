@@ -19,8 +19,25 @@ angular.module('directives.mapDirective', [
       };
       var map = new google.maps.Map(element[0], mapOptions);
       var infowindow = new google.maps.InfoWindow();
+      var markers = [];
 
-      // Controllers APIs
+      // Sets the map on all markers in the array.
+      var setAllMap = function(map) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+      };
+      // Removes the markers from the map, but keeps them in the array.
+      var clearMarkers = function() {
+        setAllMap(null);
+      };
+      // Deletes all markers in the array by removing references to them.
+      var deleteMarkers = function() {
+        clearMarkers();
+        markers = [];
+      };
+
+      // Map API
       // ---------------------------------
       scope.refresh = function(location, markers) {
         geocodeService.geocode(location).then(function(coordinates) {
@@ -31,6 +48,7 @@ angular.module('directives.mapDirective', [
       };
 
       scope.addMarkers = function(businesses) {
+        deleteMarkers();
         angular.forEach(businesses, function(business) {
           if (business.address.geometry) {
             var marker = new google.maps.Marker({
@@ -38,6 +56,7 @@ angular.module('directives.mapDirective', [
               position: business.address.geometry,
               title: business.name
             });
+            markers.push(marker);
 
             google.maps.event.addListener(marker, 'click', function() {
               scope.$apply(function() {
