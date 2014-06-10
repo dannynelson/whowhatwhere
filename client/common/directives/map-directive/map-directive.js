@@ -38,23 +38,25 @@ angular.module('directives.mapDirective', [
             });
 
             google.maps.event.addListener(marker, 'click', function() {
-              scope.select(business);
+              scope.$apply(function() {
+                scope.select(business);
+              });
             });
 
-            // google.maps.event.addListener(marker, 'mouseover', function() {
-            //   var contentString = '<div>'+
-            //     '<div><strong>'+business.name+'</strong></div>'+
-            //     angular.element('<div></div>').raty({
-            //       score: business.rating || 0,
-            //       number: 5,
-            //       readOnly: true
-            //     }).html() +
-            //     '<div>'+(business.address.address1 || business.address.city || '') + ', ' + business.address.zip+'</div>'+
-            //     '</div>';
+            google.maps.event.addListener(marker, 'mouseover', function() {
+              var contentString = '<div>'+
+                '<div><strong>'+business.name+'</strong></div>'+
+                angular.element('<div></div>').raty({
+                  score: business.rating || 0,
+                  number: 5,
+                  readOnly: true
+                }).html() +
+                '<div>'+(business.address.address1 || business.address.city || '') + ', ' + business.address.zip+'</div>'+
+                '</div>';
 
-            //   infowindow.setContent(contentString);
-            //   infowindow.open(map, marker);
-            // });
+              infowindow.setContent(contentString);
+              infowindow.open(map, marker);
+            });
           }
         });
       };
