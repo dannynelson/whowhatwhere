@@ -24,6 +24,8 @@ angular.module('directives.mapDirective', [
       // ---------------------------------
       scope.refresh = function(location, markers) {
         geocodeService.geocode(location).then(function(coordinates) {
+          // offset coordinates to accomodate for sidebar width
+          coordinates.A += 0.08;
           map.setCenter(coordinates);
         });
       };

@@ -19,8 +19,12 @@
 // //  ? Business description 
 
 // //  Up to 5 customer reviews
-// Add markers
-// display info
+
+// Remove duplicates
+// alert if no location provided
+// write tests
+// style display
+// deploy to heroku
 
 angular.module('app', [
   'angularSpinner',
@@ -34,12 +38,12 @@ angular.module('app', [
 .controller('AppController', function($scope, $q, foursquareService, yelpService) {
   $scope.search = function(location, term) {
     $scope.searching = true;
+    $scope.refreshMap(location);
     $q.all([
       yelpService.search(location, term),
       foursquareService.search(location, term)
     ]).then(function(results) {
       // TODO: remove duplicates
-      $scope.refreshMap(location);
       $scope.searching = false;
       $scope.results = results[0].concat(results[1]).slice(0, 25);
       $scope.addMarkers($scope.results);

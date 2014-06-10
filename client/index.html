@@ -50,7 +50,7 @@
             <img ng-src="{{ selectedBusiness.photo || 'http://placehold.it/100x100' }}">
           </div>
           <div class="name">{{ selectedBusiness.name }}</div>
-          <raty ng-if="selectedBusiness.rating" score="{{ selectedBusiness.rating }}" number="5"></raty>
+          <raty ng-if="selectedBusiness.rating" score="{{ selectedBusiness.rating || 0 }}" number="5"></raty>
           <div ng-if="!selectedBusiness.rating">Rating not available</div>
         </div><!-- /header -->
 
