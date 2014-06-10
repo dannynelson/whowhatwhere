@@ -5,6 +5,7 @@
   <title>WhoWhatWhere</title>
   <!-- for grunt watch livereload -->
   <script src="//localhost:35729/livereload.js"></script>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="bundle.css" rel="stylesheet">
 </head>
 
@@ -31,42 +32,57 @@
         class="result"
         ng-click="select(result)">
 
-        <div class="pull-left thumbnail">
-          <img ng-src="{{ result.photo || 'http://placehold.it/100x100' }}">
+        <div class="clearfix">
+          <div class="pull-left thumbnail">
+            <img ng-src="{{ result.photo || 'http://placehold.it/100x100' }}">
+          </div>
+          <div class="title">{{ result.name }}</div>
+          <raty ng-if="result.rating" score="{{ result.rating }}" number="5"></raty>
+          <div ng-if="!result.rating">Rating not available</div>
+          
+          <div>{{ result.address.address1 || result.address.city }}, {{ result.address.zip }}</div>
+          <div>{{ result.phone | phone }}</div>
+        </div><!-- /.clearfix -->
+
+        <div>
+          <strong>Categories:</strong> <span class="badge" ng-repeat="category in result.categories track by $index">{{category}}</span>
         </div>
-        <div class="name">{{ result.name }}</div>
-        <raty ng-if="result.rating" score="{{ result.rating }}" number="5"></raty>
-        <div ng-if="!result.rating">Rating not available</div>
-        <div><span ng-repeat="category in business.categories track by $index">{{category}}</span></div>
-        <div>{{ result.address.address1 || result.address.city + ', ' }}{{ result.address.zip }}</div>
-        <div>{{ result.phone | phone }}</div>
       </div>
 
       <!-- Result detail -->
-      <div class="result" ng-if="!searching && selectedBusiness">
-        <div ng-click="selectedBusiness = null">Back to List</div>
-        <div class="header">
-          <div class="pull-left thumbnail">
-            <img ng-src="{{ selectedBusiness.photo || 'http://placehold.it/100x100' }}">
+      <div ng-if="!searching && selectedBusiness">
+        <button ng-click="returnToList()" type="button" class="btn btn-primary btn-xs back-button">
+          <i class="fa fa-arrow-left"></i> Back to List
+        </button>
+
+        <div class="result">
+          <div class="header">
+            <div class="clearfix">
+              <div class="pull-left thumbnail">
+                <img ng-src="{{ selectedBusiness.photo || 'http://placehold.it/100x100' }}">
+              </div>
+              <div class="title">{{ selectedBusiness.name }}</div>
+              <raty ng-if="selectedBusiness.rating" score="{{ selectedBusiness.rating }}" number="5"></raty>
+              <div ng-if="!selectedBusiness.rating">Rating not available</div>
+              
+              <div>{{ selectedBusiness.address.address1 || selectedBusiness.address.city }}, {{ selectedBusiness.address.zip }}</div>
+              <div>{{ selectedBusiness.phone | phone }}</div>
+            </div><!-- /.clearfix -->
+            <div>
+              <strong>Categories:</strong> <span class="badge" ng-repeat="category in selectedBusiness.categories track by $index">{{category}}</span>
+            </div>
+            <a ng-if="selectedBusiness.url" href="{{ selectedBusiness.url }}">Business website</a>
+            <a ng-if="selectedBusiness.menu" href="{{ selectedBusiness.menu }}">Business menu</a>
+          </div><!-- /header -->
+          <hr>
+          <div class="title">Reviews</div>
+          <hr>
+          <div class="review" ng-repeat="review in selectedBusiness.reviews">
+            <div>{{ review.user }}</div>
+            <raty ng-if="review.rating" score="{{ review.rating }}" number="5"></raty>
+            <div>{{ review.text }}</div>
+            <hr>
           </div>
-          <div class="name">{{ selectedBusiness.name }}</div>
-          <raty ng-if="selectedBusiness.rating" score="{{ selectedBusiness.rating || 0 }}" number="5"></raty>
-          <div ng-if="!selectedBusiness.rating">Rating not available</div>
-        </div><!-- /header -->
-
-        <div>
-          <div><span ng-repeat="category in business.categories track by $index">{{category}}</span></div>
-          <a ng-if="business.url" href="{{business.url}}">Business URL</a>
-          <a ng-if="business.menu" href="{{business.menu}}">Menu</a>
-          <div>Address: {{ selectedBusiness.address.address1 ? selectedBusiness.address.address1 + ', ' : '' }}{{ selectedBusiness.address.city }} {{ selectedBusiness.address.zip }}</div>
-          <div>Phone: {{ selectedBusiness.phone | phone }}</div>
-        </div>
-
-        <h4>Reviews</h4>
-        <div class="review" ng-repeat="review in selectedBusiness.reviews">
-          <div>{{ review.user }}</div>
-          <raty ng-if="review.rating" score="{{ review.rating }}" number="5"></raty>
-          <div>{{ review.text }}</div>
         </div>
       </div>
     </div>

@@ -9,11 +9,6 @@ angular.module('services.geocodeService', [])
       geocoder.geocode({address: address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           d.resolve(results[0].geometry.location);
-          // map.setCenter(results[0].geometry.location);
-          // var marker = new google.maps.Marker({
-          //     map: map,
-          //     position: results[0].geometry.location
-          // });
         } else {
           d.reject("Was not able to locate the address for the following reason: " + status);
         }

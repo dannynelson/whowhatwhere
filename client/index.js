@@ -1,30 +1,12 @@
-// //  Business name 
-
-// //  Business address 
-
-// //  Business Phone number 
-
-// //  Business url 
-
-// //  The business photo 
-
-// //  ??(foursquare only) If the business has a menu display a link to the menu 
-
-// //  List of categories attributed to the business 
-
-// //  Average business rating 
-
-// //  ? Hours of operation with the current days hours of operation highlighted 
-
-// //  ? Business description 
-
-// //  Up to 5 customer reviews
-
 // Remove duplicates
 // alert if no location provided
 // write tests
+// clean unecessary dependencies
+// document
 // style display
 // deploy to heroku
+// remove duplicat html
+// add some kind of router
 
 angular.module('app', [
   'angularSpinner',
@@ -35,7 +17,22 @@ angular.module('app', [
   'directives.raty'
 ])
 
-.controller('AppController', function($scope, $q, foursquareService, yelpService) {
+.controller('AppController', function($scope, $q, foursquareService, yelpService, _) {
+  var mergeUniqueResults = function(results1, results2) {
+    debugger;
+    var resultsMap = {};
+    angular.forEach(results1, function(result) {
+      resultsMap[result.name.toLowerCase()] = result;
+    });
+    angular.forEach(results2, function(result) {
+      var businessName = result.name.toLowerCase();
+      resultsMap[businessName] = resultsMap[businessName] || result;
+    });
+    return _.map(resultsMap, function(result, businessName) {
+      return result;
+    });
+  };
+
   $scope.search = function(location, term) {
     $scope.searching = true;
     $scope.refreshMap(location);
@@ -43,9 +40,10 @@ angular.module('app', [
       yelpService.search(location, term),
       foursquareService.search(location, term)
     ]).then(function(results) {
-      // TODO: remove duplicates
       $scope.searching = false;
-      $scope.results = results[0].concat(results[1]).slice(0, 25);
+      // remove dupliactes
+      $scope.results = mergeUniqueResults(results[0], results[1]).slice(0, 25);
+      debugger;
       $scope.addMarkers($scope.results);
       $scope.location = '';
       $scope.term = '';
@@ -54,5 +52,9 @@ angular.module('app', [
 
   $scope.select = function(business) {
     $scope.selectedBusiness = business;
+  };
+
+  $scope.returnToList = function() {
+    $scope.selectedBusiness = null;
   };
 });
