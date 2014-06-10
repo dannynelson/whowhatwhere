@@ -1,3 +1,11 @@
+/**
+ * @ngdoc factory
+ * @name yelpService
+ *
+ * @description
+ * Service for communicating with the yelp API
+ */
+
 angular.module('services.yelpService', [
   'services.lodash',
   'services.geocodeService'

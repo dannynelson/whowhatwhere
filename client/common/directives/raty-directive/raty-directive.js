@@ -1,5 +1,11 @@
 /**
+ * @ngdoc directive
+ * @name raty
+ * @restrict E
  *
+ * @description
+ * Directive that converts rating data into stars
+ * 
  * @example
  * <raty id="star{{$index}}" score="1" number="5"></raty>
  */

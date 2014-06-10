@@ -1,13 +1,3 @@
-// Remove duplicates
-// alert if no location provided
-// write tests
-// clean unecessary dependencies
-// document
-// style display
-// deploy to heroku
-// remove duplicat html
-// add some kind of router
-
 angular.module('app', [
   'angularSpinner',
   'services.foursquareService',

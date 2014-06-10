@@ -1,10 +1,22 @@
+/**
+ * @ngdoc directive
+ * @name mapDirective
+ * @restrict A
+ *
+ * @description
+ * Creates a google map, with an API for adding markers, and recentering.
+ *
+ * @example
+ * <div map-directive id="map-canvas" refresh="refreshMap" add-markers="addMarkers" select="select"></div>
+ */
+
 angular.module('directives.mapDirective', [
   'services.geocodeService'
 ])
 
 .directive('mapDirective', function(geocodeService) {
   return {
-    restrict: 'EA',
+    restrict: 'A',
     scope: {
       refresh: '=',
       addMarkers: '=',
@@ -36,10 +48,12 @@ angular.module('directives.mapDirective', [
         clearMarkers();
         markers = [];
       };
-
-      // Map API
-      // ---------------------------------
-      scope.refresh = function(location, markers) {
+      
+      /** 
+       * Recenter map at new location
+       * @param {string} location - String of location where map will be centered
+       */
+      scope.refresh = function(location) {
         geocodeService.geocode(location).then(function(coordinates) {
           // offset coordinates to accomodate for sidebar width
           coordinates.A += 0.08;
@@ -47,6 +61,10 @@ angular.module('directives.mapDirective', [
         });
       };
 
+      /** 
+       * Add collection of markers to map, remove existing markers.
+       * @param {array} businesses - Array of businesses, containing coordinate information to represent markers on the map
+       */
       scope.addMarkers = function(businesses) {
         deleteMarkers();
         angular.forEach(businesses, function(business) {

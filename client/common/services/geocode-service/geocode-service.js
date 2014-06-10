@@ -1,3 +1,11 @@
+/**
+ * @ngdoc factory
+ * @name geocodeService
+ *
+ * @description
+ * Service for geocoding address strings into latitude and longitude coordinates
+ */
+
 angular.module('services.geocodeService', [])
 
 .factory('geocodeService', function($q) {

@@ -1,3 +1,11 @@
+/**
+ * @ngdoc factory
+ * @name foursquareService
+ *
+ * @description
+ * Service for communicating with the foursquare API
+ */
+
 angular.module('services.foursquareService', [
   'services.lodash'
 ])
