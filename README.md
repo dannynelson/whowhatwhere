@@ -1,6 +1,6 @@
 # WhoWhatWhere
 
-An interactive map that aggregates data from Yelp and Foursquare.
+An interactive map that aggregates data from Yelp and Foursquare. You can see a working demo [here](http://whowhatwhere.herokuapp.com/)
 
 ## Project Setup
 
