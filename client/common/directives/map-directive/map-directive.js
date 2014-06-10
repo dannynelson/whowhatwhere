@@ -62,7 +62,7 @@ angular.module('directives.mapDirective', [
       };
 
       /** 
-       * Add collection of markers to map, remove existing markers.
+       * Add collection of markers to map, remove existing markers. Add listeners for marker click and hover.
        * @param {array} businesses - Array of businesses, containing coordinate information to represent markers on the map
        */
       scope.addMarkers = function(businesses) {

@@ -8,6 +8,12 @@ angular.module('app', [
 ])
 
 .controller('AppController', function($scope, $q, foursquareService, yelpService, _) {
+  /** 
+   * Merge results into one unique array. If there is a duplicate, go with the first set.
+   * @param {array} results1 - first array of business data
+   * @param {array} results1 - second array of business data
+   * @return {array} merged data
+   */
   var mergeUniqueResults = function(results1, results2) {
     var resultsMap = {};
     angular.forEach(results1, function(result) {
@@ -22,6 +28,11 @@ angular.module('app', [
     });
   };
 
+  /** 
+   * Search both yelp and foursquare, and update page with results.
+   * @param {string} location - location to search for
+   * @param {string} term - additional term to refine search
+   */
   $scope.search = function(location, term) {
     if (!/\w+/.test(location)) {
       alert('Sorry, a location is required!');
